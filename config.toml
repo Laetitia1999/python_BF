@@ -35,10 +35,14 @@ color = ["tab:blue", "tab:orange", "tab:green"]
 # Configuration des fichiers PDF
 [pdf]
 title = 'Report.pdf'
+# Configuration des rappels
+[reminder]
+threshold = 30  # Nombre de jours après lesquels le rappel est nécessaire
 
 # Configuration de l'envoi d'e-mails
 [mail]
 smtp_server = "smtp.example.com"
+smtp_port = 587
 sender_email = "oceane.guiovanna@gmail.com"
 sender_password = "lvlk xsbt zjkt dfjh"
 recipient_email = "laetitia_sfeir@hotmail.com"

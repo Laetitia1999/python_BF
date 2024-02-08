@@ -6,6 +6,15 @@ import repository
 import view
 
 path = config["input"]["input_path"]
+def main():
+    # Chargement de la configuration depuis config.toml
+config = toml.load('config.toml')
+excel_file_path = config['input']['input_path']
+bq_sheet = config['input']['sheet_bank']
+erp_sheet = config['input']['sheet_server']
+tableau_sheet = config['input']['sheet_data']
+column_status = config['input']['column_status']
+column_amount = config['input']['column_amount']
 
 # get data from excel_file
 df_bq = pd.read_excel(path, sheet_name = config["input"]["sheet_bank"])
@@ -23,18 +32,26 @@ inner_join = pd.merge(df_erp, df_bq, on='Numéro', how='inner')
 repository.get_status(df=inner_join, column_status=column_status)
 
 # Open excel workbook and print the status in sheet BQ
-view.print_data(path=path, df=inner_join, status=column_status)
+view.print_data(path=excel_file_path, df=inner_join, column_status=column_status)
 
 # get invoices and amounts for which a reminder e-mail must be sent
 final_list = repository.get_list_reminder(df_erp)
 
 # sent reminder email
-view.mail("oceane.guiovanna@gmail.com", "lvlk xsbt zjkt dfjh", "Laetitia_sfeir@hotmail.com", "Mail de relance",
-          final_list)
+View.mail(config['mail']['smtp_server'], config['mail']['sender_email'], config['mail']['sender_password'], config['mail']['recipient_email'], config['mail']['mail_subject'], config['mail']['mail_body'], final_list)
+
 
 # creating the necessary dataframe for graphic and table
 table1 = repository.create_tables(excel, column_amount, column_status)[0]
 table2 = repository.create_tables(excel, column_amount, column_status)[1]
 
 # generate chart and pdf
-view.graph(table1, table2)
+view.graph(config, table1, table2)
+#j'ai ajouter ça pour la partie graph
+for graph_config in config['graphics']:
+        if graph_config['id'] == 1:
+            View.graph(table1, **graph_config['options'])
+        elif graph_config['id'] == 2:
+            View.graph(table2, **graph_config['options'])
+if __name__ == "__main__":
+    main()
