@@ -1,0 +1,58 @@
+# Configuration générale du projet
+[project]
+name = "python_bf"
+
+# Configuration de l'entrée des données
+[input]
+input_path = 'C:\Users\laeti\OneDrive\Desktop\python_BF'
+sheet_bank = 'bq'
+sheet_server ='ERP'
+sheet_data = 'tableau'
+column_status = 'Status'
+column_amount = 'Montant1'
+
+# Configuration des graphiques
+[[graphics]]
+id = 1
+
+[graphics.options]
+chart_type = "bar"
+x_axis_label = "Status"
+y_axis_label = "Nombre de facture"
+title = "Bar chart"
+color = ["tab:blue", "tab:orange", "tab:green"]
+
+[[graphics]]
+id = 2
+
+[graphics.options]
+chart_type = "bar"
+x_axis_label = "Date"
+y_axis_label = "Total"
+title = "Représentation du CA"
+color = ["tab:blue", "tab:orange", "tab:green"]
+
+# Configuration des fichiers PDF
+[pdf]
+title = 'Report.pdf'
+
+# Configuration de l'envoi d'e-mails
+[mail]
+smtp_server = "smtp.example.com"
+sender_email = "oceane.guiovanna@gmail.com"
+sender_password = "lvlk xsbt zjkt dfjh"
+recipient_email = "laetitia_sfeir@hotmail.com"
+mail_subject = "Mail de relance"
+mail_body = 'f"""\
+        Bonjour,
+
+        Je vous informe que votre facture {invoice}, pour un montant de {amount} euros reste à ce jour impayée.
+
+        Je vous pris de bien vouloir vous acquitter du montant de la facture dans un délai de 8 jours, dans le cas \
+        contraire
+        votre dossier sera transmis à notre service de recouvrement.
+
+        Merci pour votre compréhension.
+        """'
+
+
