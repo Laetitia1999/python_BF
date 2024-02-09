@@ -76,5 +76,3 @@ def get_list_reminder(df, config):
     amont = df['Montant'].to_list()
     final_list = list(zip(facture, amont))
     return final_list
-if __name__ == "__main__":
-    main()
