@@ -14,9 +14,9 @@ def print_data(config, df):
     :param df: dataFrame
     :param column_status: column status of the dataframe that need to be printed
     """
-excel_file_path = config['input']['input_path']
-sheet_bank = config['input']['sheet_bank']
-column_status = config['input']['column_status']
+    excel_file_path = config['input']['input_path']
+    sheet_bank = config['input']['sheet_bank']
+    column_status = config['input']['column_status']
 
     wb = xw.Book(excel_file_path)  # Open the workbook
     sheet = wb.sheets[sheet_bank]  # select sheet
@@ -40,8 +40,8 @@ def mail(config, invoice_list):
     recipient_email = config['mail']['recipient_email']
     mail_subject = config['mail']['mail_subject']
     mail_body = config['mail']['mail_body']
-    for invoice, amount in invoice_list:
 
+    for invoice, amount in invoice_list:
         # Corps de l'e-mail
         body = f"""\
         Bonjour,
@@ -57,8 +57,8 @@ def mail(config, invoice_list):
 
         # Créez un objet MIMEMultipart
         message = MIMEMultipart()
-        message["From"] = str(sender)
-        message["To"] = str(mail_receiver)
+        message["From"] = str(sender_email)
+        message["To"] = str(recipient_email)
         message["Subject"] = str(mail_subject)
 
         # Attachez le corps au message
@@ -92,9 +92,10 @@ def graph(config, table, tab):
     :param tab:  second dataframe to appear in the pdf
     :return: a pdf with the two dataframe and their plots
     """
-pdf_file_path = config['pdf']['title']
 
-    with PdfPages('Report.pdf') as pdf:
+    pdf_file_path = config['pdf']['title']
+
+    with PdfPages(pdf_file_path) as pdf:
         fig, axes = plt.subplots(4, 1, figsize=(8, 13))
         fig.tight_layout(pad=7.0)  # Adjust layout to prevent clipping of titles
 

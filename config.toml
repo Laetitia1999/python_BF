@@ -47,7 +47,7 @@ sender_email = "oceane.guiovanna@gmail.com"
 sender_password = "lvlk xsbt zjkt dfjh"
 recipient_email = "laetitia_sfeir@hotmail.com"
 mail_subject = "Mail de relance"
-mail_body = 'f"""\
+mail_body = """
         Bonjour,
 
         Je vous informe que votre facture {invoice}, pour un montant de {amount} euros reste à ce jour impayée.
@@ -57,6 +57,6 @@ mail_body = 'f"""\
         votre dossier sera transmis à notre service de recouvrement.
 
         Merci pour votre compréhension.
-        """'
+        """
 
 
