@@ -56,4 +56,4 @@ def main():
         elif graph_config['id'] == 2:
             view.graph(table2, **graph_config['options'])
 
-#
+
