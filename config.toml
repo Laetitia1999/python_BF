@@ -4,7 +4,7 @@ name = "python_bf"
 
 # Configuration de l'entrée des données
 [input]
-input_path = 'C:\Users\laeti\OneDrive\Desktop\python_BF'
+input_path = 'C:\Users\laeti\OneDrive\Desktop\python_BF\account.invoice (1).xlsx'
 sheet_bank = 'bq'
 sheet_server ='ERP'
 sheet_data = 'tableau'
