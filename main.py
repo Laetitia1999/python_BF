@@ -52,8 +52,9 @@ def main():
     # j'ai ajouté ça pour la partie graph
     for graph_config in config['graphics']:
         if graph_config['id'] == 1:
-            view.graph(table1, **graph_config['options'])
+            view.graph(table1, graph_config['options'])
         elif graph_config['id'] == 2:
-            view.graph(table2, **graph_config['options'])
+            view.graph(table2, graph_config['options'])
+
 
 
