@@ -5,7 +5,7 @@ import pandas as pd
 import Repository
 import View
 
-path = r"C:\Users\laeti\OneDrive\Desktop\Nouveau dossier (2)\account.invoice (1).xlsx"
+path = 'C:\Users\laeti\OneDrive\Desktop\python_BF\account.invoice (1).xlsx'
 
 # get data from excel_file
 df_bq = pd.read_excel(path, sheet_name="bq")
