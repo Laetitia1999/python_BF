@@ -7,23 +7,19 @@ import xlwings as xw
 from matplotlib.backends.backend_pdf import PdfPages
 
 
-def print_data(config, df):
+def print_data(path, df, status):
     """
     Print the status of the dataFrame in the Excel sheet
     :param path: path of the wordbook
     :param df: dataFrame
     :param column_status: column status of the dataframe that need to be printed
     """
-    excel_file_path = config['input']['input_path']
-    sheet_bank = config['input']['sheet_bank']
-    column_status = config['input']['column_status']
-
-    wb = xw.Book(excel_file_path)  # Open the workbook
-    sheet = wb.sheets[sheet_bank]  # select sheet
-    sheet['G1'].options(index=False).value = df[column_status]  # write status in the file
+    wb = xw.Book(path)  # Open the workbook
+    sheet = wb.sheets['bq']  # select sheet
+    sheet['G1'].options(index=False).value = df[status]  # write status in the file
 
 
-def mail(config, invoice_list):
+def mail(sender: str, password: str, mail_receiver: str, mail_subject: str, invoice_list: list):
     """
     send a reminder to client that didn't pay their invoice
     :param sender: sender email
@@ -33,15 +29,8 @@ def mail(config, invoice_list):
     :param invoice_list: list of tuple with invoice and amount of each client
     :return: sent an email
     """
-    smtp_server = config['mail']['smtp_server']
-    smtp_port = config['mail']['smtp_port']
-    sender_email = config['mail']['sender_email']
-    sender_password = config['mail']['sender_password']
-    recipient_email = config['mail']['recipient_email']
-    mail_subject = config['mail']['mail_subject']
-    mail_body = config['mail']['mail_body']
-
     for invoice, amount in invoice_list:
+
         # Corps de l'e-mail
         body = f"""\
         Bonjour,
@@ -57,8 +46,8 @@ def mail(config, invoice_list):
 
         # Créez un objet MIMEMultipart
         message = MIMEMultipart()
-        message["From"] = str(sender_email)
-        message["To"] = str(recipient_email)
+        message["From"] = str(sender)
+        message["To"] = str(mail_receiver)
         message["Subject"] = str(mail_subject)
 
         # Attachez le corps au message
@@ -66,9 +55,9 @@ def mail(config, invoice_list):
 
         # Initialisez la connexion SMTP
         try:
-            server = smtplib.SMTP(smtp_server,smtp_port)
+            server = smtplib.SMTP("smtp.gmail.com", 587)
             server.starttls()
-            server.login(sender_email, sender_password)
+            server.login(str(sender), str(password))
             print("successful connection")
         except Exception as e:
             print("Erreur lors de la connexion au serveur SMTP : ", e)
@@ -76,7 +65,7 @@ def mail(config, invoice_list):
 
         # Envoyer l'e-mail
         try:
-            server.sendmail(sender_email, recipient_email, message.as_string())
+            server.sendmail(str(sender), str(mail_receiver), message.as_string())
             print("E-mail envoyé")
         except Exception as e:
             print("Erreur lors de l'envoi de l'e-mail : ", e)
@@ -85,7 +74,7 @@ def mail(config, invoice_list):
         server.quit()
 
 
-def graph(config, table, tab):
+def graph(table, tab):
     """
     create plots, stack them and save into a pdf file
     :param table: first dataframe to appear in the pdf
@@ -93,9 +82,7 @@ def graph(config, table, tab):
     :return: a pdf with the two dataframe and their plots
     """
 
-    pdf_file_path = config['pdf']['title']
-
-    with PdfPages(pdf_file_path) as pdf:
+    with PdfPages('Report.pdf') as pdf:
         fig, axes = plt.subplots(4, 1, figsize=(8, 13))
         fig.tight_layout(pad=7.0)  # Adjust layout to prevent clipping of titles
 
