@@ -4,7 +4,7 @@ import pandas as pd
 
 import Repository
 import View
-r"C:\Users\Marilyn\Downloads\account.invoice (1).xlsx"
+
 path = r"C:\Users\laeti\OneDrive\Desktop\Nouveau dossier (2)\account.invoice (1).xlsx"
 
 # get data from excel_file
